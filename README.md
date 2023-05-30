@@ -3,3 +3,5 @@
 </h1>
 
 ## **Inicializando o projeto**
+
+npm init
