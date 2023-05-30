@@ -4,8 +4,8 @@ declare global {
     namespace Express{
         interface Request{
             auth: {
-                clientUuid?: string
-                contactUuid?: string
+                clientId?: number
+                contactId?: number
             }
         }
     }

@@ -18,12 +18,12 @@ const ensureClientTokenIsValid = (req: Request, resp:Response, next: NextFunctio
             throw new AppError(error.message, 401)
         }
 
-        if(!decoded.clientUuid){
+        if(!decoded.clientId){
             throw new AppError("You aren't a Client.", 403)
         }
 
         req.auth ={
-            clientUuid: decoded.clientUuid
+            clientId: decoded.clientId
         }
 
     })

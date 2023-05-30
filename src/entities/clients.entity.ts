@@ -4,8 +4,8 @@ import Contact from "./contacts.entity";
 
 @Entity('client')
 class Client{
-    @PrimaryGeneratedColumn('uuid')
-    id: string
+    @PrimaryGeneratedColumn('increment')
+    id: number
 
     @CreateDateColumn({type:'date'})
     createdAt: string

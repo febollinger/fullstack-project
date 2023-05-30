@@ -28,13 +28,13 @@ const listAllClientsService = async (): Promise<allClientsReturn> => {
     return returnAllClientsSchema.parse(findClients)
 }
 
-const editClientService = async (data: updateClient,clientUiid: string): Promise<clientReturn> => {
+const editClientService = async (data: updateClient,clientId: number): Promise<clientReturn> => {
 
     const clientRepository: Repository<Client> = AppDataSource.getRepository(Client)
 
     const findingClient: Client | null = await clientRepository.findOne({
         where:{
-            id:clientUiid
+            id:clientId
         }
     })
 
@@ -49,7 +49,7 @@ const editClientService = async (data: updateClient,clientUiid: string): Promise
 
 }
 
-const deleteClientService = async (clientUiid: string): Promise<void> => {
+const deleteClientService = async (clientUiid: number): Promise<void> => {
 
     const clientRepository: Repository<Client> = AppDataSource.getRepository(Client)
 

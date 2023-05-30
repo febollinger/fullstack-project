@@ -3,15 +3,23 @@ import { DeepPartial, Repository } from "typeorm";
 import Contact from "../../entities/contacts.entity";
 import AppDataSource from "../../data-source";
 import { AppError } from "../../errors";
-import { allContactsReturn, contactReturn, updateContact } from "../../interfaces/contact.interface";
-import { returnAllContactsSchema, returnContactSchema } from "../../schemas/contact/contacts.schema";
+import { contactReturn, updateContact } from "../../interfaces/contact.interface";
+import { returnContactSchema } from "../../schemas/contact/contacts.schema";
+import Client from "../../entities/clients.entity";
 
-const createContactService = async (data: DeepPartial<Contact>): Promise<contactReturn> => {
+const createContactService = async (data: DeepPartial<Contact>, clientId: number): Promise<contactReturn> => {
 
     const contactRepository: Repository<Contact> = AppDataSource.getRepository(Contact)
 
-    const creating = contactRepository.create({
-        ...data
+    const clientRepository: Repository<Client> = AppDataSource.getRepository(Client)
+
+    const findUser: Client | null = await clientRepository.findOneBy({
+        id: clientId
+    })
+
+    const creating = contactRepository.create({ 
+        ...data,
+        client: findUser!
     })
 
     await contactRepository.save(creating)
@@ -19,26 +27,33 @@ const createContactService = async (data: DeepPartial<Contact>): Promise<contact
     return returnContactSchema.parse(creating)
 }
 
-const listAllContactsService = async (): Promise<allContactsReturn> => {
-    const contactRepository: Repository<Contact> = AppDataSource.getRepository(Contact)
+const listAllContactsService = async (clientId: number): Promise<any> => {
+    const clientRepository: Repository<Client> = AppDataSource.getRepository(Client)
 
-    const findContacts: Contact[]= await contactRepository.find()
+    const findContacts = await clientRepository.find({
+        where:{
+            id: clientId
+        },
+        relations: {
+            contacts:true
+        },
+        
+    })
+  
 
-    return returnAllContactsSchema.parse(findContacts)
+    return findContacts
 }
 
-const editContactService = async (data: updateContact,contactUuid: string): Promise<contactReturn> => {
+const editContactService = async (data: updateContact,contactId: number, clientId:number): Promise<contactReturn> => {
 
     const contactRepository: Repository<Contact> = AppDataSource.getRepository(Contact)
 
-    const findingContact: Contact | null = await contactRepository.findOne({
-        where:{
-            id:contactUuid
-        }
+    const findContact: Contact | null = await contactRepository.findOneBy({
+        id: contactId
     })
 
     const contactUpdate = contactRepository.create({
-        ...findingContact,
+        ...findContact,
         ...data
     })
 
@@ -48,18 +63,18 @@ const editContactService = async (data: updateContact,contactUuid: string): Prom
 
 }
 
-const deleteContactService = async (contactUuid: string): Promise<void> => {
+const deleteContactService = async (getContact: number): Promise<void> => {
 
     const contactRepository: Repository<Contact> = AppDataSource.getRepository(Contact)
 
     const findingContact: Contact | null = await contactRepository.findOne({
         where:{
-            id: contactUuid
+            id: getContact
         }
     })
 
     if(!findingContact){
-        throw new AppError("Client not found", 400)
+        throw new AppError("Contact not found", 400)
     }
 
     await contactRepository.remove(findingContact)

@@ -18,7 +18,7 @@ const readAllClientsController = async (req:Request, resp:Response): Promise<Res
 }
 
 const editClientController = async (req: Request, resp: Response): Promise<Response> => {
-    const getClient: string | undefined = req.auth.clientUuid
+    const getClient: number | undefined = req.auth.clientId
     const bodyData: updateClient = req.body
 
     if(!getClient){
@@ -32,7 +32,7 @@ const editClientController = async (req: Request, resp: Response): Promise<Respo
 }
 
 const deleteClientController = async (req: Request, resp: Response): Promise<Response> => {
-    const getClient: string | undefined = req.auth.clientUuid
+    const getClient: number | undefined = req.auth.clientId
     
     if(!getClient){
         throw new AppError("Unauthorized", 401)
