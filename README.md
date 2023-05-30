@@ -4,4 +4,6 @@
 
 ## **Inicializando o projeto**
 
+```
 npm init
+```
