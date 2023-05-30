@@ -9,7 +9,7 @@ const createClientSchema = z.object({
 })
 
 const returnClientSchema = createClientSchema.extend({
-    id: z.string(),
+    id: z.number(),
     createdAt: z.string()
 }).omit({
     password: true

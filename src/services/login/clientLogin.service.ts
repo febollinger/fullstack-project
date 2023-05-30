@@ -30,12 +30,13 @@ const createClientLoginService = async (data: createLogin): Promise<Token | stri
 
     const token = jwt.sign(
         {
-            clientUuid: findingClient.id
+            clientId: findingClient.id
         },
         process.env.SECRET_KEY!,
         {
             expiresIn:"24hrs",
-            subject: findingClient.id!
+            subject: findingClient.id!.toString
+            ()
         }
     )
 
