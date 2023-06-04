@@ -28,6 +28,7 @@ const listAllClientsService = async (): Promise<allClientsReturn> => {
     return returnAllClientsSchema.parse(findClients)
 }
 
+
 const editClientService = async (data: updateClient,clientId: number): Promise<clientReturn> => {
 
     const clientRepository: Repository<Client> = AppDataSource.getRepository(Client)

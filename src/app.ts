@@ -9,7 +9,9 @@ import loginRouters from "./routers/login/login.routers";
 
 const app: Application = express();
 app.use(express.json())
+const cors = require("cors");
 
+app.use(cors());
 app.use("/client", clientRouters)
 app.use("/login", loginRouters)
 

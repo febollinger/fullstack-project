@@ -238,6 +238,59 @@
                         }
                     }
                 }
+            },
+            "get": {
+                "summary": "Get a client",
+                "tags": [
+                    "Clients"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Client id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {}
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns one clients"
+                    },
+                    "404": {
+                        "description": "Client not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Client not found"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing bearer token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Missing bearer token"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/login": {
@@ -290,7 +343,7 @@
                 }
             }
         },
-        "/client/{id}/contact": {
+        "/client/contact": {
             "post": {
                 "summary": "Add a new contact",
                 "tags": [
@@ -310,8 +363,7 @@
                                 "example": {
                                     "name": "Alvaro",
                                     "number": "35996874123",
-                                    "email": "alvaro@gmail.com",
-                                    "password": "123456789"
+                                    "email": "alvaro@gmail.com"
                                 }
                             }
                         }
@@ -362,9 +414,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/client/contact": {
+            },
             "get": {
                 "summary": "Get a list of contacts",
                 "tags": [
@@ -506,6 +556,59 @@
                 "responses": {
                     "204": {
                         "description": "Confirms the contact deletion"
+                    },
+                    "404": {
+                        "description": "Contact not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Contact not found"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Missing bearer token",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "example": {
+                                        "message": "Missing bearer token"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get one contact",
+                "tags": [
+                    "Contacts"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Contact id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content": {}
+                },
+                "responses": {
+                    "200": {
+                        "description": "Returns one contact"
                     },
                     "404": {
                         "description": "Contact not found",

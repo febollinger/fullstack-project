@@ -4,7 +4,7 @@ import { DeepPartial } from "typeorm";
 import Contact from "../../entities/contacts.entity";
 import { updateClient } from "../../interfaces/client.interface";
 import { AppError } from "../../errors";
-import { createContactService, deleteContactService, editContactService, listAllContactsService } from "../../services/contacts/contacts.services";
+import { createContactService, deleteContactService, editContactService, getOneContactService, listAllContactsService } from "../../services/contacts/contacts.services";
 import { updateContact } from "../../interfaces/contact.interface";
 
 const createContactController = async (req: Request, resp: Response): Promise<Response> => {
@@ -38,6 +38,20 @@ const editContactController = async (req: Request, resp: Response): Promise<Resp
 
 }
 
+const getOneContactController = async (req: Request, resp: Response): Promise<Response> => {
+    const contactId: number | undefined = Number(req.params.id)
+    const clientId: number= req.auth.clientId!
+
+    if(!contactId){
+        throw new AppError("Contact not found", 400)
+    }
+
+    const contactUpdating = await getOneContactService(contactId)
+
+    return resp.status(200).json(contactUpdating)
+
+}
+
 const deleteContactController = async (req: Request, resp: Response): Promise<Response> => {
     const getContact: number | undefined = Number(req.params.id)
     
@@ -55,5 +69,6 @@ export {
     createContactController,
     readAllContactsController,
     editContactController,
-    deleteContactController
+    deleteContactController,
+    getOneContactController
 }

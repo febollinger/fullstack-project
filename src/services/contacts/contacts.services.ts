@@ -39,6 +39,8 @@ const listAllContactsService = async (clientId: number): Promise<any> => {
         },
         
     })
+
+    console.log(findContacts)
   
 
     return findContacts
@@ -60,6 +62,19 @@ const editContactService = async (data: updateContact,contactId: number, clientI
     await contactRepository.save(contactUpdate)
 
     return returnContactSchema.parse(contactUpdate)
+
+}
+
+const getOneContactService = async (contactId: number): Promise<contactReturn> => {
+
+    const contactRepository: Repository<Contact> = AppDataSource.getRepository(Contact)
+
+    const findContact: Contact | null = await contactRepository.findOneBy({
+        id: contactId
+    })
+
+
+    return returnContactSchema.parse(findContact)
 
 }
 
@@ -86,5 +101,6 @@ export {
     createContactService,
     listAllContactsService,
     editContactService,
-    deleteContactService
+    deleteContactService,
+    getOneContactService
 }

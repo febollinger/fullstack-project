@@ -17,6 +17,7 @@ const readAllClientsController = async (req:Request, resp:Response): Promise<Res
     return resp.status(200).json(getClients)
 }
 
+
 const editClientController = async (req: Request, resp: Response): Promise<Response> => {
     const getClient: number | undefined = req.auth.clientId
     const bodyData: updateClient = req.body
