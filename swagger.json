@@ -238,59 +238,6 @@
                         }
                     }
                 }
-            },
-            "get": {
-                "summary": "Get a client",
-                "tags": [
-                    "Clients"
-                ],
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Client id",
-                        "required": true
-                    }
-                ],
-                "requestBody": {
-                    "content": {}
-                },
-                "responses": {
-                    "200": {
-                        "description": "Returns one clients"
-                    },
-                    "404": {
-                        "description": "Client not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "example": {
-                                        "message": "Client not found"
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Missing bearer token",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "example": {
-                                        "message": "Missing bearer token"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/login": {
